@@ -2,9 +2,6 @@ import math
 import time
 
 
-# Optimized sieve without text conversion
-import math
-
 def multibase_sieve(limit):
     numbers = list(range(2, limit + 1))
     max_base = int(math.sqrt(limit))
