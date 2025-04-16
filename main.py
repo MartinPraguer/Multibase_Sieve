@@ -3,12 +3,19 @@ import time
 
 
 # Optimized sieve without text conversion
-def sieve_modulo_filter(limit):
+import math
+
+def multibase_sieve(limit):
     numbers = list(range(2, limit + 1))
     max_base = int(math.sqrt(limit))
     operation_count = 0
+    used_bases = []
 
     for base in range(2, max_base + 1):
+        if any(base % b == 0 for b in used_bases):
+            continue
+
+        used_bases.append(base)
         filtered = []
         zero_ended = []
 
@@ -52,7 +59,7 @@ def compare_methods(limit):
 
     # Custom sieve (modulo filtering)
     start1 = time.perf_counter()
-    result_custom, ops_custom = sieve_modulo_filter(limit)
+    result_custom, ops_custom = multibase_sieve(limit)
     duration1 = time.perf_counter() - start1
 
     # Classical Eratosthenes sieve
@@ -60,7 +67,7 @@ def compare_methods(limit):
     result_erat, ops_erat = sieve_eratosthenes(limit)
     duration2 = time.perf_counter() - start2
 
-    print("\n=== 🧮 Multibase Sieve (modulo) ===")
+    print("\n=== 🧮 Multibase Sieve ===")
     print(f"Survivors: {len(result_custom):,}".replace(",", "."))
     print(f"Execution time: {duration1:.6f} seconds")
     print(f"Operations: {ops_custom:,}".replace(",", "."))
